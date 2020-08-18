@@ -101,6 +101,7 @@
 		57299A7A24EBBC5100579783 /* NeatoTest */ = {
 			isa = PBXGroup;
 			children = (
+				57299AAE24EBBC6100579783 /* Modules */,
 				57299A7B24EBBC5100579783 /* AppDelegate.swift */,
 				57299A7D24EBBC5100579783 /* SceneDelegate.swift */,
 				57299A7F24EBBC5100579783 /* ViewController.swift */,
@@ -129,6 +130,13 @@
 				57299AA224EBBC5600579783 /* Info.plist */,
 			);
 			path = NeatoTestUITests;
+			sourceTree = "<group>";
+		};
+		57299AAE24EBBC6100579783 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Modules;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
