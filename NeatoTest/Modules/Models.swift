@@ -104,6 +104,8 @@ class CitiesCoreData: EntityProtocol {
         cities = cityArray
         if cities.count > 0 {
             modelResultUser?.saveWasSuccessful()
+        } else {
+            modelResultUser?.saveFailed()
         }
         
     }
