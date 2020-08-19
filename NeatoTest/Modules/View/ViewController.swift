@@ -24,6 +24,7 @@ class ViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         showIndicatorView(with: "Wait :/")
+        self.presenter = Presenter(view: self)
         setupCollectionView()
         // Do any additional setup after loading the view.
     }
@@ -99,7 +100,10 @@ class ViewController: BaseViewController {
 
 extension ViewController: CityViewProtocol {
     func reloadData() {
-        
+        removeIndicator()
+        cityCollectionView?.reloadData()
+        cityCollectionView?.layoutIfNeeded()
+        definesPresentationContext = true
     }
     
     func fetchFailed(title: String, message: String, actions: [UIAlertAction]) {
