@@ -167,14 +167,11 @@
 				57299AAE24EBBC6100579783 /* Modules */,
 				57299A7B24EBBC5100579783 /* AppDelegate.swift */,
 				57299A7D24EBBC5100579783 /* SceneDelegate.swift */,
-				57299A7F24EBBC5100579783 /* ViewController.swift */,
 				57299A8124EBBC5100579783 /* Main.storyboard */,
 				57299A8724EBBC5500579783 /* Assets.xcassets */,
 				57299A8924EBBC5500579783 /* LaunchScreen.storyboard */,
 				57299A8C24EBBC5500579783 /* Info.plist */,
 				57299A8424EBBC5100579783 /* NeatoTest.xcdatamodeld */,
-				57299ACF24EC84CC00579783 /* CityCollectionViewCell.swift */,
-				57299AD124EC8A5000579783 /* protocols.swift */,
 			);
 			path = NeatoTest;
 			sourceTree = "<group>";
@@ -200,6 +197,8 @@
 		57299AAE24EBBC6100579783 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				57A0683624ED4E3C007CFC92 /* View */,
+				57299AD124EC8A5000579783 /* protocols.swift */,
 				57299AB224EBD5D000579783 /* Models.swift */,
 				57299ACD24EC80BE00579783 /* Presenter.swift */,
 				57299AD824EC95BC00579783 /* WireFrame.swift */,
@@ -244,6 +243,15 @@
 				57299AD424EC8D6900579783 /* Comic Sans MS.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		57A0683624ED4E3C007CFC92 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				57299A7F24EBBC5100579783 /* ViewController.swift */,
+				57299ACF24EC84CC00579783 /* CityCollectionViewCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		C9038901A50131839A584090 /* Frameworks */ = {
