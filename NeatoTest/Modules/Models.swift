@@ -136,9 +136,8 @@ class CitiesCoreData: EntityProtocol {
 
 struct City {
     var name : String?
-    var temprature: Int?
-    static let pictureURlFresh = PicURLs.randomPicFresh
-    static let pictureURLGray = PicURLs.randomPicUgly
+    let pictureURlFresh = PicURLs.randomPicFresh
+    let pictureURLGray = PicURLs.randomPicUgly
 }
 
 struct CitiesDic: Codable {
