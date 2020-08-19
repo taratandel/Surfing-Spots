@@ -39,7 +39,7 @@ class Presenter: PresenterProtocol {
      - Returns: the desired data for that specific indexPath
      */
     func getCity(at indexPath: IndexPath) -> City {
-        return City()
+        return citiesDic?[indexPath.row] ?? City()
     }
     /**
      This function will count the number of datas we want the collection view to show
@@ -48,7 +48,7 @@ class Presenter: PresenterProtocol {
      -  Returns: a number that indicated the number of desired cells
      */
     func getTheNumberOfItemsInSection(section: Int) -> Int {
-        return 2
+        return citiesDic?.count ?? 0
     }
     /**
      After the view is completed the it will ask for data and the presenter is reponsilble for netwroking
@@ -143,6 +143,7 @@ extension Presenter: ModelResultProtocol {
      */
     func saveWasSuccessful() {
         citiesDic = model?.cities
+        view?.reloadData()
     }
     /**
      This function is the implementation of the ModelResultProtocol which will inform the user of the result of the save action
