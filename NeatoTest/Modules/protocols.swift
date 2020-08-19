@@ -9,9 +9,9 @@
 import Foundation
 import UIKit
 // MARK: - View -> Presenter
-protocol PresenterProtocol: class {
+protocol PresenterProtocol {
     func getTheNumberOfItemsInSection(section: Int) -> Int
-    func getCity(at: IndexPath) -> City
+    func getCity(at indexPath: IndexPath) -> City
     func mainViewDidLoad()
 }
 
@@ -21,6 +21,6 @@ protocol CityViewProtocol: class {
     func fetchFailed(title: String, message: String, actions: [UIAlertAction])
 }
 // MARK: - WireFrame Protocol
-protocol WireFrameProtocol: class {
+protocol WireFrameProtocol {
     static func creatTheView(_ viewRef: ViewController)
 }
