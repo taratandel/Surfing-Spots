@@ -12,10 +12,22 @@ import CoreData
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    var window: UIWindow?
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        /// sets the global appearance for the app 
+        Appearances.setGlobalAppearance()
+        window = UIWindow()
+        let initialStoryBoard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = initialStoryBoard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
+        WireFrame.creatTheView(vc)
+        let nav = UINavigationController()
+        nav.viewControllers = [vc]
+        window?.rootViewController = nav
+        window?.makeKeyAndVisible()
         return true
     }
 
