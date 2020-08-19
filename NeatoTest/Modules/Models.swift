@@ -10,10 +10,12 @@ import Foundation
 import CoreData
 import UIKit
 
-class citiesCoreData {
-    var cities: [NSManagedObject] = []
-    
+class CitiesCoreData: EntityProtocol {
+    var cities: CitiesDic?
+        
     func saveToCoreData(name: String) {
+        var citiesManagedObject: [NSManagedObject] = []
+
         guard let appDelegate =
             UIApplication.shared.delegate as? AppDelegate else {
                 return
@@ -28,16 +30,16 @@ class citiesCoreData {
             NSEntityDescription.entity(forEntityName: "Cities",
                                        in: managedContext)!
         
-        let person = NSManagedObject(entity: entity,
+        let city = NSManagedObject(entity: entity,
                                      insertInto: managedContext)
         
         // 3
-        person.setValue(name, forKeyPath: "name")
+        city.setValue(name, forKeyPath: "name")
         
         // 4
         do {
             try managedContext.save()
-            cities.append(person)
+            citiesManagedObject.append(city)
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
@@ -57,18 +59,28 @@ class citiesCoreData {
         
         //3
         do {
-            cities = try managedContext.fetch(fetchRequest)
+           let citiesManagedObject = try managedContext.fetch(fetchRequest)
+            fillCitiesDic(citiesManagedObject)
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
     
+    private func fillCitiesDic(_ citiesManagedObject: [NSManagedObject]){
+        for city in citiesManagedObject {
+            print(city)
+        }
+    }
 }
 
 struct City: Codable {
     var name: String?
+    var temprature: Int?
+    var pictureURlFresh = PicURLs.randomPicFresh
+    var pictureURLGray = PicURLs.randomPicUgly
 }
 
 struct CitiesDic: Codable {
     var cities:[City]
 }
+
