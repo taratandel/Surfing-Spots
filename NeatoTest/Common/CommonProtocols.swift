@@ -14,3 +14,7 @@ protocol RequestServices: class {
     func requestFaild(_ error: Error)
 }
 
+// MARK: - list services
+protocol GetDataProtocol: class {
+    func getTheListData(url: String?, method: HTTPMethod,  parameter: Parameters?, header: HTTPHeaders?)
+}
