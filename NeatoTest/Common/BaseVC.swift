@@ -36,5 +36,19 @@ class BaseViewController: UIViewController {
         indicatorView?.view.removeFromSuperview()
         indicatorView = nil
     }
-
+    /**
+     show an alert with specified actions
+     - Parameters:
+        - title: the title of the alert
+        - message: the message of the alert
+        - action: an array of desired actions to be done by the alert
+        - completion: a handler for call back of the action (the defalut value in nil)
+     - Returns:
+     will present an alert with a list of actions 
+     */
+    func showAlert(title: String, message: String, actions: [UIAlertAction], completion: (() -> Void)? = nil)  {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        actions.forEach{alertController.addAction($0)}
+        self.present(alertController, animated: true, completion: completion)
+    }
 }
