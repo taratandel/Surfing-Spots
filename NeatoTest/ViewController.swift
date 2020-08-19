@@ -97,6 +97,15 @@ class ViewController: BaseViewController {
 
     }
 
+extension ViewController: CityViewProtocol {
+    func reloadData() {
+        
+    }
     
+    func fetchFailed(title: String, message: String, actions: [UIAlertAction]) {
+        
+    }
+    
+}
 
 
