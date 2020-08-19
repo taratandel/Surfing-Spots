@@ -9,7 +9,7 @@
 import Foundation
 
 /// A class for routing inside the application
-class WireFrame: GestureListWireFramProtocol {
+class WireFrame: WireFrameProtocol {
     /**
      Initializes the given VC and assigns the suitable presenter to it.
      - Parameters:
