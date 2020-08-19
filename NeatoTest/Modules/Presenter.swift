@@ -13,13 +13,13 @@ import UIKit
 
 class Presenter: PresenterProtocol {
     /// this is not weak because each presenter must have a client
-    var client: GetDataProtocol?
+    private var client: GetDataProtocol?
     /// this protocol is weak because if we don't have a view it's meaningless to have a presenter for it
     weak var view: CityViewProtocol?
     /// this is the coredata class
-    var model: EntityProtocol?
+    private var model: EntityProtocol?
     
-    var citiesDic: [City]?
+    private var citiesDic: [City]?
     /**
      initializes the presenter class for a given vc
      - Parameters:
@@ -27,10 +27,9 @@ class Presenter: PresenterProtocol {
      - Returns: a new presenter with a new client for the view
      */
     init(view: CityViewProtocol) {
-        self.client = FetchRemoteData(requestProtocol: self)
         self.view = view
         self.model = CitiesCoreData(modelResultUser: self)
-        model?.retrieveFromeCoreData()
+        self.client = FetchRemoteData(requestProtocol: self)
     }
     /**
      This function will give to the collectionview the needed data
@@ -56,16 +55,7 @@ class Presenter: PresenterProtocol {
      This function first will check for saved cities if there weren't any it will start the request
      */
     func mainViewDidLoad() {
-        guard let citiesDic = model?.cities else {
-            client?.getTheListData(url: RequestType.cityList.path, method: .get, parameter: nil, header: nil)
-            return
-        }
-        if citiesDic.count > 0 {
-            self.citiesDic = citiesDic
-        } else {
-            client?.getTheListData(url: RequestType.cityList.path, method: .get, parameter: nil, header: nil)
-            
-        }
+        model?.retrieveFromeCoreData()
     }
 }
 /// The necessary functions for networking after the request is complete the presenter is responsible for data convertion and also for the connection between the entity
@@ -75,7 +65,7 @@ extension Presenter: RequestServices {
      
      based on the result of parsing the failure or success will be concluded
      - Parameters:
-     - respnse: data type for parsing
+        - respnse: data type for parsing
      */
     func requestIsComplete(_ response: Data) {
         do {
