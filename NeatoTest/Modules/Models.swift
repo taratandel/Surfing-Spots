@@ -11,11 +11,17 @@ import CoreData
 import UIKit
 
 class CitiesCoreData: EntityProtocol {
-    var cities: CitiesDic?
-        
-    func saveToCoreData(name: String) {
+    var cities: [City] = []
+    
+    weak var modelResultUser: ModelResultProtocol?
+    
+    init(modelResultUser: ModelResultProtocol?) {
+        self.modelResultUser = modelResultUser
+    }
+    
+    func saveToCoreData(array: CitiesDic) {
         var citiesManagedObject: [NSManagedObject] = []
-
+        
         guard let appDelegate =
             UIApplication.shared.delegate as? AppDelegate else {
                 return
@@ -31,18 +37,35 @@ class CitiesCoreData: EntityProtocol {
                                        in: managedContext)!
         
         let city = NSManagedObject(entity: entity,
-                                     insertInto: managedContext)
-        
-        // 3
-        city.setValue(name, forKeyPath: "name")
-        
-        // 4
-        do {
-            try managedContext.save()
-            citiesManagedObject.append(city)
-        } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
+                                   insertInto: managedContext)
+        if let cities = array.cities {
+            for cityName in cities {
+                guard let name = cityName.name else {
+                    self.deleteData()
+                    modelResultUser?.saveFailed()
+                    return
+                }
+                
+                
+                // 3
+                city.setValue(name, forKeyPath: "name")
+                
+                // 4
+                do {
+                    try managedContext.save()
+                    citiesManagedObject.append(city)
+                } catch let error as NSError {
+                    self.deleteData()
+                    modelResultUser?.saveFailed()
+                    
+                    print("Could not save. \(error), \(error.userInfo)")
+                    return
+                    
+                }
+            }
         }
+        self.fillCitiesDic(citiesManagedObject)
+        
     }
     
     func retrieveFromeCoreData() {
@@ -55,11 +78,11 @@ class CitiesCoreData: EntityProtocol {
         let managedContext =
             appDelegate.persistentContainer.viewContext
         let fetchRequest =
-            NSFetchRequest<NSManagedObject>(entityName: "Person")
+            NSFetchRequest<NSManagedObject>(entityName: "Cities")
         
         //3
         do {
-           let citiesManagedObject = try managedContext.fetch(fetchRequest)
+            let citiesManagedObject = try managedContext.fetch(fetchRequest)
             fillCitiesDic(citiesManagedObject)
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
@@ -67,20 +90,59 @@ class CitiesCoreData: EntityProtocol {
     }
     
     private func fillCitiesDic(_ citiesManagedObject: [NSManagedObject]){
+        var cityArray: [City] = []
+
         for city in citiesManagedObject {
-            print(city)
+            guard let name = city.value(forKey: "name") as? String else {
+                self.modelResultUser?.saveFailed()
+                return
+            }
+            var cityInstance = City()
+            cityInstance.name = name
+            cityArray.append(cityInstance)
+        }
+        cities = cityArray
+        if cities.count > 0 {
+            modelResultUser?.saveWasSuccessful()
+        }
+        
+    }
+    
+    private func deleteData() {
+        guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+                return
+        }
+        
+        // 1
+        let managedContext =
+            appDelegate.persistentContainer.viewContext
+        let fetchRequest =
+            NSFetchRequest<NSManagedObject>(entityName: "Cities")
+        
+        //3
+        do {
+            let citiesManagedObject = try managedContext.fetch(fetchRequest)
+            for city in citiesManagedObject {
+                managedContext.delete(city)
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
 }
 
-struct City: Codable {
-    var name: String?
+struct City {
+    var name : String?
     var temprature: Int?
-    var pictureURlFresh = PicURLs.randomPicFresh
-    var pictureURLGray = PicURLs.randomPicUgly
+    static let pictureURlFresh = PicURLs.randomPicFresh
+    static let pictureURLGray = PicURLs.randomPicUgly
 }
 
 struct CitiesDic: Codable {
-    var cities:[City]
+    var cities: [CityName]?
 }
 
+struct CityName: Codable {
+    var name: String?
+}

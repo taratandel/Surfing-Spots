@@ -25,9 +25,15 @@ protocol WireFrameProtocol {
     static func creatTheView(_ viewRef: ViewController)
 }
 
-// MARK: -Entity -> Presenter
-protocol EntityProtocol: class {
-    var cities: CitiesDic? {get set}
-    func saveToCoreData(name: String)
+// MARK: - Presenter -> Entity
+protocol EntityProtocol {
+    var cities: [City]  {get set}
+    func saveToCoreData(array: CitiesDic)
     func retrieveFromeCoreData()
+}
+
+// MARK: - Entity -> Presenter
+protocol ModelResultProtocol: class {
+    func saveWasSuccessful()
+    func saveFailed()
 }
