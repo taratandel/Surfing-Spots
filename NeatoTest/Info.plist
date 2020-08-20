@@ -65,5 +65,10 @@
 		<string>Comic Sans MS Bold.ttf</string>
 		<string>Comic Sans MS.ttf</string>
 	</array>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>
