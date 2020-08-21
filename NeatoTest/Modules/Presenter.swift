@@ -21,7 +21,7 @@ class Presenter: PresenterProtocol {
     /// the local copy of the array of cities
     private var citiesDic: [City]?
     /// handler for temprature
-    private var tempHandler: TempretureHandler?
+    private var tempHandler: PresenterTempratureProtocol?
     
     /// avoid reloading the view each time a temp is loaded
     private var viewIsReloaded = false
@@ -31,6 +31,8 @@ class Presenter: PresenterProtocol {
     
     /// keeps track of last random number
     private var lastUpdatedCity: [String] = []
+    
+    
     /**
      initializes the presenter class for a given vc
      - Parameters:
