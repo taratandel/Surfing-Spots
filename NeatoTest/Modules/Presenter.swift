@@ -34,7 +34,7 @@ class Presenter: PresenterProtocol {
     /**
      initializes the presenter class for a given vc
      - Parameters:
-     - view: the view for which we are trying to make the presenter for
+        - view: the view for which we are trying to make the presenter for
      - Returns: a new presenter with a new client for the view
      */
     init(view: CityViewProtocol) {
@@ -43,7 +43,7 @@ class Presenter: PresenterProtocol {
     /**
      This function will give to the collectionview the needed data
      - Parameters:
-     - at: given indexPath for which we need the data
+        - at indexPath: given indexPath for which we need the data
      - Returns: the desired data for that specific indexPath
      */
     func getCity(at indexPath: IndexPath) -> City {
@@ -52,7 +52,7 @@ class Presenter: PresenterProtocol {
     /**
      This function will count the number of datas we want the collection view to show
      - Parameters:
-     - section: the section number
+        - section: the section number
      -  Returns: a number that indicated the number of desired cells
      */
     func getTheNumberOfItemsInSection(section: Int) -> Int {
@@ -89,7 +89,7 @@ extension Presenter: RequestServices {
      
      based on the result of parsing the failure or success will be concluded
      - Parameters:
-     - respnse: data type for parsing
+        - respnse: data type for parsing
      */
     func requestIsComplete(_ response: Data) {
         do {
@@ -110,7 +110,7 @@ extension Presenter: RequestServices {
     /**
      The implementation of the protocol function when the request fails
      - Parameters:
-     - error: Error type when request fails
+        - error: Error type when request fails
      */
     func requestFaild(_ error: Error) {
         self.fetchFailed(error: error, message: nil)
@@ -118,8 +118,8 @@ extension Presenter: RequestServices {
     /**
      this function will show an alerts based on the result of the failed request
      - Parameters:
-     - error: the Error type when there are an error
-     - message: the message that must be shown to the user
+        - error: the Error type when there are an error
+        -  message: the message that must be shown to the user
      */
     func fetchFailed(error: Error, message: String?) {
         if message != nil {

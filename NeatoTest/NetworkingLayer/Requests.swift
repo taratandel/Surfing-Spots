@@ -12,6 +12,8 @@ import Alamofire
 enum RequestType {
     case cityList
     case tempratuer(minTemp: String, maxTemp: String)
+    case randomPicFresh(height: String, width: String, randomNO: String)
+    case randomPicGrayScale(height: String, width: String, randomNO: String)
     
     var path: String {
         switch self {
@@ -19,9 +21,14 @@ enum RequestType {
             return String(format: "%@/652ceb94-b24e-432b-b6c5-8a54bc1226b6", EndPoints.citiesSeverEndPoint)
         case let .tempratuer(minTemp, maxTemp):
             return String(format: "%@/random?min=%@&max=%@&json", EndPoints.randomServerEndPoint, minTemp, maxTemp)
+        case let .randomPicFresh(height, width, randomNO):
+            return String(format: "%@/%@/%@?random=%@.jpg", EndPoints.randomPicServerEndPoint, width, height, (randomNO + "\(Int.random(in: 1...100))"))
+        case let .randomPicGrayScale(height, width, randomNO):
+            return String(format: "%@/%@/%@?random=%@&grayscale&blur=2.jpg", EndPoints.randomPicServerEndPoint, width, height, (randomNO + "\(Int.random(in: 1...100))"))
         }
     }
 }
+
 /// this class is for networking
 class FetchRemoteData {
     weak var requestProtocol: RequestServices?
