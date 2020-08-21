@@ -10,17 +10,18 @@ import UIKit
 
 /// This view will show and indicator with a desired text
 class IndicatorViewController: UIViewController {
-    // MARK: IBOutlets
+    // MARK: - IBOutlets
     @IBOutlet weak var indicatorLabel: UILabel!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
-    // MARK: parameter
+    // MARK: - private parameter
     private var indicatorLabelText: String?
     
-    // MARK: View settings
+    // MARK: - View settings
     override func viewDidLoad() {
         super.viewDidLoad()
         indicator.startAnimating()
         indicatorLabel.text = indicatorLabelText
+        indicatorLabel.font = UIFont.defaultFont
         // Do any additional setup after loading the view.
     }
     
