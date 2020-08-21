@@ -94,8 +94,28 @@ class ViewController: BaseViewController {
 
         func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
             return sectionInsets.left
-        }
+// MARK: - CityViewProtocol
+extension ViewController: CityViewProtocol {
+    /**
+     This function will rearrange collection view cells
+     - Parameters:
+     - indexToBeDeleted: the source point for moving
+     - indexToBeInserted: the destination point for moving
+     */
+    func rearrangeCollectionView(indexToBedeleted: Int, indexToBeInserted: Int) {
+        DispatchQueue.main.async {
+//            self.view.isUserInteractionEnabled = false
+            self.cityCollectionView.performBatchUpdates({
+                self.cityCollectionView.deleteItems(at: [IndexPath(row: indexToBedeleted, section: 0)])
 
+
+        }, completion:{ [weak self] _ in
+            self?.cityCollectionView.performBatchUpdates({
+                self?.cityCollectionView.insertItems(at: [IndexPath(row: indexToBeInserted, section: 0)])
+            }, completion: { [weak self] _ in
+                self?.view.isUserInteractionEnabled = true
+            })})
+        }
     }
 
 extension ViewController: CityViewProtocol {

@@ -242,6 +242,7 @@ extension Presenter: TempHandlerProtocol {
             }
             if randomNO == indexToBeInserted {return}
             // rearrange the view afteer the update of the source
+            view?.rearrangeCollectionView(indexToBedeleted: randomNO, indexToBeInserted: indexToBeInserted)
         }
     }
 }

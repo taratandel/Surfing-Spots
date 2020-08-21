@@ -19,6 +19,7 @@ protocol PresenterProtocol {
 protocol CityViewProtocol: class {
     func reloadData()
     func fetchFailed(title: String, message: String, actions: [UIAlertAction])
+    func rearrangeCollectionView(indexToBedeleted: Int, indexToBeInserted: Int)
 }
 // MARK: - WireFrame Protocol
 protocol WireFrameProtocol {
