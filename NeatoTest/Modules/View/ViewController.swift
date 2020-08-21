@@ -9,11 +9,9 @@
 import UIKit
 
 class ViewController: BaseViewController {
-
-    @IBOutlet weak var cityCollectionView: UICollectionView!
-    @IBOutlet weak var stackView: UIStackView!
     
     // MARK: - IBOutlets
+    @IBOutlet weak var cityCollectionView: UICollectionView!
     
     // MARK: - Presenter
     var presenter: PresenterProtocol?
@@ -33,69 +31,45 @@ class ViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        self.navigationController?.navigationBar.shouldRemoveShadow(true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         presenter?.mainViewDidLoad()
-
-    }
-     func setupCollectionView() {
-            (cityCollectionView.collectionViewLayout as! UICollectionViewFlowLayout).estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-            (cityCollectionView.collectionViewLayout as! UICollectionViewFlowLayout).sectionInsetReference = .fromLayoutMargins
-
-            cityCollectionView.contentInsetAdjustmentBehavior = .always
-            
-            cityCollectionView?.delegate = self
-            cityCollectionView?.dataSource = self
-        }
         
     }
-
-    // MARK: - UICollectionViewDelegate
-    extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-        func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            return presenter?.getTheNumberOfItemsInSection(section: section) ?? 0
-        }
-        
-        func numberOfSections(in collectionView: UICollectionView) -> Int {
-            return 1
-        }
-        
-        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            let gestureCell = cityCollectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CityCollectionViewCell
-            guard let cityDataToBuild = presenter?.getCity(at: indexPath) else {
-                return UICollectionViewCell()
-            }
-            gestureCell.fillData(cityDataToBuild)
-            return gestureCell
-        }
+    
+    func setupCollectionView() {
+//        cityCollectionView.contentInsetAdjustmentBehavior = .always
+        self.cityCollectionView?.alwaysBounceVertical = true
+        cityCollectionView?.delegate = self
+        cityCollectionView?.dataSource = self
     }
+    
+}
 
-    // MARK: - UICollectionViewDelegateFlowLayout
-    extension ViewController: UICollectionViewDelegateFlowLayout {
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            if indexPath == largePhotoIndexPath {
-                var size = collectionView.bounds.size
-                size.height -= (sectionInsets.top + sectionInsets.right)
-                size.width -= (sectionInsets.left + sectionInsets.right)
-                return size
-            }
-
-            let paddingSpace = sectionInsets.left * CGFloat(itemsPerRow + 1)
-            let availableWidth = view.frame.width - paddingSpace
-            let widthPerItem = availableWidth / CGFloat(itemsPerRow)
-
-            return CGSize(width: widthPerItem, height: widthPerItem)
+// MARK: - UICollectionViewDelegate
+extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return presenter?.getTheNumberOfItemsInSection(section: section) ?? 0
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cityCell = cityCollectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CityCollectionViewCell
+        guard let cityDataToBuild = presenter?.getCity(at: indexPath) else {
+            return UICollectionViewCell()
         }
+        
+        cityCell.fillData(cityDataToBuild, collectionView.bounds.width)
+//        cityCell.layoutIfNeeded()
+        return cityCell
+    }
+}
 
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-            return sectionInsets
-        }
-
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-            return sectionInsets.left
 // MARK: - CityViewProtocol
 extension ViewController: CityViewProtocol {
     /**
@@ -137,7 +111,8 @@ extension ViewController: CityViewProtocol {
      - actions: a set of actions to create the buttons
      */
     func fetchFailed(title: String, message: String, actions: [UIAlertAction]) {
-        
+        removeIndicator()
+        showAlert(title: title, message: message, actions: actions)
     }
     
 }
