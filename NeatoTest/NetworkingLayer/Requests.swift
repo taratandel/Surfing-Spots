@@ -58,6 +58,18 @@ class FetchRemoteData {
 }
 /// this is an extension will do a request and part the data based on the given presenter
 extension FetchRemoteData: GetDataProtocol {
+    /**
+     This function will request using alamofire and then retrieve the data
+     - Parameters:
+        - url: the API url string
+        - method: The method for the request can be:
+            - GET
+            - POST
+            - Delete
+            - PUT and more
+        - parameter: of there are specific parameter that we shoudl send to the server usually at post or delet or put requests
+        - header: specific hearder for caching authenticating and etc...
+     */
     func getTheListData(url: String?, method: HTTPMethod, parameter: Parameters?, header: HTTPHeaders?) {
         self.request(url: url, method: method, parameter: parameter, header: header) {
             response in

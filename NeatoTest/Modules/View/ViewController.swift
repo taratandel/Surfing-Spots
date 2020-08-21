@@ -13,14 +13,16 @@ class ViewController: BaseViewController {
     @IBOutlet weak var cityCollectionView: UICollectionView!
     @IBOutlet weak var stackView: UIStackView!
     
+    // MARK: - IBOutlets
     
+    // MARK: - Presenter
     var presenter: PresenterProtocol?
     
+    // MARK: - Private variables
     private let itemsPerRow = 1
     private let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
     
-    
-
+    // MARK: - View Loading cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         showIndicatorView(with: "Did you know the best-known product of NeatoRobotics is the Neato XV-series")
@@ -28,7 +30,7 @@ class ViewController: BaseViewController {
         setupCollectionView()
         // Do any additional setup after loading the view.
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.navigationBar.shouldRemoveShadow(true)
@@ -117,15 +119,23 @@ extension ViewController: CityViewProtocol {
             })})
         }
     }
-
-extension ViewController: CityViewProtocol {
+    
+    /**
+     when all the datas are fetched this will reload the view the proper datas
+     */
     func reloadData() {
         removeIndicator()
         cityCollectionView?.reloadData()
         cityCollectionView?.layoutIfNeeded()
         definesPresentationContext = true
     }
-    
+    /**
+     This function will show an alert when the request got failed
+     - Parameters:
+     - title: The title to show
+     - message: The message to show inside the alert
+     - actions: a set of actions to create the buttons
+     */
     func fetchFailed(title: String, message: String, actions: [UIAlertAction]) {
         
     }
