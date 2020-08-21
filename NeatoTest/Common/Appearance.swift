@@ -34,7 +34,12 @@ final class Appearances {
         UIBarButtonItem.appearance().setTitleTextAttributes([.font: UIFont(isBold: false, withSize: 17)], for: .normal)
         UIBarButtonItem.appearance().setTitleTextAttributes([.font: UIFont(isBold: false, withSize: 17)], for: .highlighted)
         UIBarButtonItem.appearance().tintColor = UIColor.red
-        UINavigationBar.appearance().tintColor = .white
+        UINavigationBar.appearance().tintColor = .gray
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithDefaultBackground()
+        appearance.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Comic Sans MS", size: 17)!]
+        appearance.largeTitleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "ComicSansMS-Bold", size: 27)!]
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
 }
 
@@ -58,17 +63,6 @@ extension UIFont {
     /// bod font of the app
     static var boldFont: UIFont {
         return UIFont(isBold: true, withSize: 15)
-    }
-}
-
-extension UINavigationBar {
-    
-    func shouldRemoveShadow(_ value: Bool) -> Void {
-        if value {
-            self.setValue(true, forKey: "hidesShadow")
-        } else {
-            self.setValue(false, forKey: "hidesShadow")
-        }
     }
 }
 
