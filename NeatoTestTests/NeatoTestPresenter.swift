@@ -24,28 +24,37 @@ class NeatoTestPresenter: XCTestCase {
     }
 
     override func tearDownWithError() throws {
+        presenter.view = nil
+        presenter = nil
+        vc = nil
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func testGetCityWithfullDic () {
+        var i = 0
+        var citiesDic: [City] = []
+        while i < 5 {
+            i += 1
+            var city = City()
+            city.name = "name" + "\(i)"
+            city.temp = i
+            citiesDic.append(city)
         }
+        let model = MockModel(shouldFail: false)
+        model.cities = citiesDic
+        presenter.requestTheCitiesIfNeeded()
+        
+        XCTAssertNotNil(presenter.getCity(at: IndexPath(row: 4, section: 0)) )
     }
     
     func setUpView(with shouldBeEmpty: Bool) {
         let client = MockClient()
         vc = MockVC()
-        presenter = GestureListPresenter(wireFrame: wireFrame, interector: interector, client: client)
-        presenter.view = vc
+        let model = MockModel(shouldFail: false)
+        presenter = Presenter(view: vc)
+        presenter.client = client
+        presenter.model = model
         vc.presenter = presenter
-        interector.presenter = presenter
     }
 
 }
