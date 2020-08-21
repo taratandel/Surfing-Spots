@@ -39,3 +39,10 @@ protocol ModelResultProtocol: class {
 protocol TempHandlerProtocol: class {
     func tempChanged(temp: Int)
 }
+
+// MARK: - Presenter -> TempHanlder
+protocol PresenterTempratureProtocol: class {
+    func requestForTheNumber()
+    func runTheTimer()
+    func terminateTheTimer()
+}

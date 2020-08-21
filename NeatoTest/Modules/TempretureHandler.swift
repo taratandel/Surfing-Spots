@@ -28,26 +28,7 @@ class TempretureHandler: RequestServices {
         self.timerInterval = timerInterval
         client = FetchRemoteData(requestProtocol: self)
     }
-    /**
-     run the timer and assign a function for each occurnace
-     */
-    func runTheTimer() {
-        fetchTimer = Timer.scheduledTimer(timeInterval: TimeInterval(timerInterval), target: self, selector: #selector(requestForTheNumber), userInfo: nil, repeats: true)
 
-    }
-    /**
-     Terminate the allocated timer
-     */
-    func terminateTheTimer() {
-        fetchTimer?.invalidate()
-    }
-    
-    /**
-     This function will call for the new temprature
-     */
-    @objc func requestForTheNumber() {
-        client?.getTheListData(url: RequestType.tempratuer(minTemp: "10", maxTemp: "40").path, method: .get, parameter: nil, header: nil)
-    }
     /**
      This function will parse the data
      - Parameters:
@@ -83,5 +64,28 @@ class TempretureHandler: RequestServices {
         if requestNO < 10 {
             requestForTheNumber()
         }
+    }
+}
+/// will handle the requests from presenter
+extension TempretureHandler: PresenterTempratureProtocol {
+    /**
+     run the timer and assign a function for each occurnace
+     */
+    func runTheTimer() {
+        fetchTimer = Timer.scheduledTimer(timeInterval: TimeInterval(timerInterval), target: self, selector: #selector(requestForTheNumber), userInfo: nil, repeats: true)
+
+    }
+    /**
+     Terminate the allocated timer
+     */
+    func terminateTheTimer() {
+        fetchTimer?.invalidate()
+    }
+    
+    /**
+     This function will call for the new temprature
+     */
+    @objc func requestForTheNumber() {
+        client?.getTheListData(url: RequestType.tempratuer(minTemp: "10", maxTemp: "40").path, method: .get, parameter: nil, header: nil)
     }
 }
