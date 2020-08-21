@@ -7,51 +7,53 @@
 //
 
 import UIKit
-import SDWebImage
+//import SDWebImage
 
 class CityCollectionViewCell: UICollectionViewCell {
-    
+    // MARK: - IBOutlets
     @IBOutlet weak var cityImage: UIImageView!
     @IBOutlet weak var cityName: UILabel!
     @IBOutlet weak var cityTemp: UILabel!
-    @IBOutlet weak var imageLoader: UIActivityIndicatorView!
-    private var city: City
-    override var isSelected: Bool {
-        didSet {
-            cityImage.layer.borderWidth = isSelected ? 10 : 2
-            cityImage.layer.borderColor = isSelected ? UIColor.red.cgColor : UIColor.blue.cgColor
-            
-        }
-    }
     
+    // MARK: - cell initialization
     override func awakeFromNib() {
-        isSelected = false
         super.awakeFromNib()
     }
-    
-    func fillData (_ city: City) {
-        self.city = city
-        imageLoader.startAnimating()
-        self.cityImage.sd_imageIndicator = SDWebImageActivityIndicator.gray
-        self.cityImage.backgroundColor = .red
-        self.cityName.text = city.name
-        self.cityName.backgroundColor = .darkGray
-        self.cityName.textColor = .white
-        self.backgroundColor = .black
+    /**
+     This function will fill the cell
+     - Parameters:
+     - city: The city data
+     - width: The width of the cell
+     */
+    func fillData (_ city: City, _ width: CGFloat) {
+        let weatherString = city.temp ?? 0 > 30 ? "Sunny - ": "Cloudy - "
+            // MARK: - background image
+            self.cityImage.isHidden = city.temp ?? 0 < 30
+            self.cityImage.image = UIImage(named: city.name ?? "PlaceHolder")
+            self.cityImage.backgroundColor = .gray
+
+            
+            // This implementation is for remote fetching
+            //        let width = Int(width)
+            //        if city.temp != temp {
+            //            temp = city.temp ?? 0
+            //            self.cityImage.sd_imageIndicator = SDWebImageActivityIndicator.gray
+            //            let requestString = city.temp ?? 0 > 30 ? RequestType.randomPicFresh(height: "\(width/2)", width: "\(width)", randomNO: "\(String(describing: city.temp))").path:RequestType.randomPicGrayScale(height: "\(width/2)", width: "\(width)", randomNO: "\(String(describing: city.temp))").path
+            //            self.cityImage.sd_setImage(with: URL(string: requestString), placeholderImage: UIImage(named: "PlaceHolder"), options: .progressiveLoad, completed: {
+            //                (_,_,_,_) in
+            //
+            //            })
+            //        }
+            
+            // MARK: - city Name
+            self.cityName.text = city.name!
+            self.cityName.font = UIFont.boldFont
+            self.cityName.font = self.cityName.font.withSize(28)
+            self.cityName.textColor = .white
+            
+            // MARK: - city Temp
+            self.cityTemp.text = weatherString + "\(city.temp!)"
+            self.cityTemp.font = UIFont.defaultFont
+            self.cityTemp.textColor = .white
     }
-    
-    func changeTheTemprature(_ temp: Int) {
-        self.cityImage.sd_setImage(with: URL(string: "https://images.app.goo.gl/AdXXAUfem1iPzB1x7"), placeholderImage: UIImage(named: "PlaceHolder"), options: .progressiveLoad, completed: {
-            [weak self]  (_,_,_,_) in
-            self?.imageLoader.isHidden = true
-        })
-    }
-    
-    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        layoutIfNeeded()
-        let layoutAttributes = super.preferredLayoutAttributesFitting(layoutAttributes)
-        layoutAttributes.bounds.size = systemLayoutSizeFitting(UIView.layoutFittingCompressedSize, withHorizontalFittingPriority: .required, verticalFittingPriority: .defaultLow)
-        return layoutAttributes
-    }
-    
 }

@@ -12,10 +12,6 @@ import Foundation
 struct EndPoints {
     static let randomServerEndPoint = "http://numbersapi.com"
     static let citiesSeverEndPoint = "https://run.mocky.io/v3"
+    static let randomPicServerEndPoint = "https://picsum.photos"
 }
 
-struct PicURLs {
-    static let randomPicFresh = "https://picsum.photos/400/300?random=1.jpg"
-    static let randomPicUgly = "https://picsum.photos/400/300?random=1&grayscale&blur=2.jpg"
-
-}
