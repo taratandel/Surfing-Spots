@@ -20,6 +20,17 @@ class Presenter: PresenterProtocol {
     private var model: EntityProtocol?
     /// the local copy of the array of cities
     private var citiesDic: [City]?
+    /// handler for temprature
+    private var tempHandler: TempretureHandler?
+    
+    /// avoid reloading the view each time a temp is loaded
+    private var viewIsReloaded = false
+    
+    /// keeps track of assigned tempratures
+    private var lastUpdatedIndex = 0
+    
+    /// keeps track of last random number
+    private var lastUpdatedCity: [String] = []
     /**
      initializes the presenter class for a given vc
      - Parameters:
@@ -163,5 +174,74 @@ extension Presenter: ModelResultProtocol {
     func saveFailed() {
         self.requestTheCitiesIfNeeded()
     }
+}
+
+extension Presenter: TempHandlerProtocol {
+    
+    func requestForTemps() {
+        tempHandler?.requestForTheNumber()
+    }
+    
+    func tempChanged(temp: Int) {
+        guard let cities = citiesDic else {
+            requestTheCitiesIfNeeded()
+            return
+        }
+        if !viewIsReloaded {
+            if lastUpdatedIndex < cities.count {
+                let city = cities[lastUpdatedIndex]
+                if city.temp == nil {
+                    var newCity = city
+                    newCity.temp = temp
+                    citiesDic?.remove(at: lastUpdatedIndex)
+                    citiesDic?.insert(newCity, at: lastUpdatedIndex)
+                    lastUpdatedIndex += 1
+                    tempHandler?.requestForTheNumber()
+                }
+            }else {
+                self.viewIsReloaded = true
+                self.citiesDic = cities.sorted(by: { $0.temp! > $1.temp! })
+                view?.reloadData()
+                tempHandler?.runTheTimer()
+            }
+            
+        } else {
+            /// random genrator
+            var randomNO = Int.random(in: 0...(cities.count - 1))
+            
+            /// copy of the city that is changing
+            var newCity = cities[randomNO]
+            if lastUpdatedCity.count == cities.count { lastUpdatedCity.removeAll()}
+            
+            while lastUpdatedCity.contains(newCity.name ?? "") {
+                randomNO = Int.random(in: 0...(cities.count - 1))
+                newCity = cities[randomNO]
+            }
+            lastUpdatedCity.append(newCity.name ?? "")
+            newCity.temp = temp
+            
+            /// copy of the array of cities to leave the actual source untouched if there were a reading during update
+            var copyCity = cities
+            copyCity.remove(at: randomNO)
+            
+            /// the indexpath.row of the new city
+            var indexToBeInserted = 0
+            
+            // check for the place that the new city should go
+            if let index = copyCity.firstIndex(where: {$0.temp! < temp}) {
+                indexToBeInserted = index + 1
+                copyCity.insert(newCity, at: index)
+            } else {
+                indexToBeInserted = copyCity.count
+                copyCity.append(newCity)
+            }
+            
+            // check if insertion was done without any error
+            if copyCity.count == citiesDic?.count ?? 0 {
+                citiesDic = copyCity
+            }
+            if randomNO == indexToBeInserted {return}
+            // rearrange the view afteer the update of the source
+        }
     }
 }

@@ -11,7 +11,7 @@ import Alamofire
 /// the path for the requests based on the given parameters
 enum RequestType {
     case cityList
-    case tempratuer(minTemp: Int, maxTemp: Int)
+    case tempratuer(minTemp: String, maxTemp: String)
     
     var path: String {
         switch self {

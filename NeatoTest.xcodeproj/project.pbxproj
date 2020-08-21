@@ -31,6 +31,7 @@
 		57299AD224EC8A5000579783 /* protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57299AD124EC8A5000579783 /* protocols.swift */; };
 		57299AD624EC8D6900579783 /* Comic Sans MS.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57299AD424EC8D6900579783 /* Comic Sans MS.ttf */; };
 		57299AD724EC8D6900579783 /* Comic Sans MS Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57299AD524EC8D6900579783 /* Comic Sans MS Bold.ttf */; };
+		57A0683A24EDC7F0007CFC92 /* TempretureHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A0683924EDC7F0007CFC92 /* TempretureHandler.swift */; };
 		57A0683C24EEA22F007CFC92 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A0683B24EEA22F007CFC92 /* Extension.swift */; };
 		6CE7FDFF4507C9FA2FEE3C5F /* Pods_NeatoTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A859B972118D868CC072271D /* Pods_NeatoTest.framework */; };
 		94550D484DB885EE0B3440DA /* Pods_NeatoTest_NeatoTestUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4018BF635C8B22D8F0B617 /* Pods_NeatoTest_NeatoTestUITests.framework */; };
@@ -85,6 +86,7 @@
 		57299AD124EC8A5000579783 /* protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = protocols.swift; sourceTree = "<group>"; };
 		57299AD424EC8D6900579783 /* Comic Sans MS.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Comic Sans MS.ttf"; sourceTree = "<group>"; };
 		57299AD524EC8D6900579783 /* Comic Sans MS Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Comic Sans MS Bold.ttf"; sourceTree = "<group>"; };
+		57A0683924EDC7F0007CFC92 /* TempretureHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempretureHandler.swift; sourceTree = "<group>"; };
 		57A0683B24EEA22F007CFC92 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		5E6C42194D1E42BB12D0DD1A /* Pods_NeatoTestTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NeatoTestTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A60A4205BA63D9D7D510130F /* Pods-NeatoTestTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeatoTestTests.debug.xcconfig"; path = "Target Support Files/Pods-NeatoTestTests/Pods-NeatoTestTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 				57299AD124EC8A5000579783 /* protocols.swift */,
 				57299AB224EBD5D000579783 /* Models.swift */,
 				57299ACD24EC80BE00579783 /* Presenter.swift */,
+				57A0683924EDC7F0007CFC92 /* TempretureHandler.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -208,6 +211,7 @@
 		57299AB424EC32E800579783 /* NetworkingLayer */ = {
 			isa = PBXGroup;
 			children = (
+				57299ABC24EC6D7B00579783 /* Results.swift */,
 				57299AB524EC33B700579783 /* Requests.swift */,
 			);
 			path = NetworkingLayer;
@@ -218,7 +222,6 @@
 			children = (
 				57299AB824EC3F8A00579783 /* Constants.swift */,
 				57299ABA24EC6C2000579783 /* CommonProtocols.swift */,
-				57299ABC24EC6D7B00579783 /* Results.swift */,
 				57299AC024EC720500579783 /* Appearance.swift */,
 				57299AC224EC797E00579783 /* BaseVC.swift */,
 				57A0683B24EEA22F007CFC92 /* Extension.swift */,
@@ -520,6 +523,7 @@
 				57299ACA24EC7BE300579783 /* IndicatorViewController.swift in Sources */,
 				57299ABD24EC6D7B00579783 /* Results.swift in Sources */,
 				57299ACE24EC80BE00579783 /* Presenter.swift in Sources */,
+				57A0683A24EDC7F0007CFC92 /* TempretureHandler.swift in Sources */,
 				57299ABB24EC6C2000579783 /* CommonProtocols.swift in Sources */,
 				57299AB324EBD5D000579783 /* Models.swift in Sources */,
 			);

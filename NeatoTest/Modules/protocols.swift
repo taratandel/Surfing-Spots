@@ -37,3 +37,8 @@ protocol ModelResultProtocol: class {
     func saveWasSuccessful()
     func saveFailed()
 }
+
+// MARK: - TempHandler -> Presenter
+protocol TempHandlerProtocol: class {
+    func tempChanged(temp: Int)
+}
