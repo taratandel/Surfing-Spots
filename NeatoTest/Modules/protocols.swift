@@ -29,7 +29,7 @@ protocol WireFrameProtocol {
 // MARK: - Presenter -> Entity
 protocol EntityProtocol {
     var cities: [City]  {get set}
-    func saveToCoreData(array: CitiesDic)
+    func saveToCoreData(name: String)
     func retrieveFromeCoreData()
 }
 

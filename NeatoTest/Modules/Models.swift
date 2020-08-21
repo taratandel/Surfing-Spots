@@ -9,89 +9,102 @@
 import Foundation
 import CoreData
 import UIKit
-
+/// a class that takes care of changes in the core data
 class CitiesCoreData: EntityProtocol {
+    /// a copy of cities the we retrieved from the database
     var cities: [City] = []
     
     weak var modelResultUser: ModelResultProtocol?
-    
+    /**
+     Initialized an instance of CititesCoreData for a specific user
+     - Parameters:
+        - modelResultUser: the client of the database
+     */
     init(modelResultUser: ModelResultProtocol?) {
         self.modelResultUser = modelResultUser
     }
     
-    func saveToCoreData(array: CitiesDic) {
+    /**
+     This function will save a single entity to the data base
+     - Parameters:
+        - name: the string that we want to save at Cities entity
+     */
+    func saveToCoreData(name: String) {
+        /// The managed object used to save the data
         var citiesManagedObject: [NSManagedObject] = []
         
+        /// and instance of the current application
         guard let appDelegate =
             UIApplication.shared.delegate as? AppDelegate else {
                 return
         }
         
-        // 1
+        /// the context of the presistentContainer
         let managedContext =
             appDelegate.persistentContainer.viewContext
         
-        // 2
+        /// an instance of the Cities entity
         let entity =
             NSEntityDescription.entity(forEntityName: "Cities",
                                        in: managedContext)!
         
+        /// a managed of the to be saved
         let city = NSManagedObject(entity: entity,
                                    insertInto: managedContext)
-        if let cities = array.cities {
-            for cityName in cities {
-                guard let name = cityName.name else {
-                    self.deleteData()
-                    modelResultUser?.saveFailed()
-                    return
-                }
-                
-                
-                // 3
-                city.setValue(name, forKeyPath: "name")
-                
-                // 4
-                do {
-                    try managedContext.save()
-                    citiesManagedObject.append(city)
-                } catch let error as NSError {
-                    self.deleteData()
-                    modelResultUser?.saveFailed()
-                    
-                    print("Could not save. \(error), \(error.userInfo)")
-                    return
-                    
-                }
-            }
-        }
-        self.fillCitiesDic(citiesManagedObject)
         
+        
+        
+        // sets the valie for our enitity
+        city.setValue(name, forKeyPath: "name")
+        
+        
+        do {
+            try managedContext.save()
+            citiesManagedObject.append(city)
+        } catch let error as NSError {
+            self.deleteData()
+            modelResultUser?.saveFailed()
+            print("Could not save. \(error), \(error.userInfo)")
+        }
     }
     
+    /**
+     The function to retirieve an array of managedobjects of cities
+     */
     func retrieveFromeCoreData() {
+        /// and instance of the current application
         guard let appDelegate =
             UIApplication.shared.delegate as? AppDelegate else {
                 return
         }
         
-        // 1
+        /// and instance of the current application
         let managedContext =
             appDelegate.persistentContainer.viewContext
+        
+        /// the fetch request for entity Citites
         let fetchRequest =
             NSFetchRequest<NSManagedObject>(entityName: "Cities")
         
-        //3
         do {
             let citiesManagedObject = try managedContext.fetch(fetchRequest)
             fillCitiesDic(citiesManagedObject)
         } catch let error as NSError {
+            self.modelResultUser?.saveFailed()
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
     
+    /**
+     This function will convert the NSManagedObject to City Object
+     - Parameters:
+        - citiesManagedObject: the managed object to be converted
+     */
     private func fillCitiesDic(_ citiesManagedObject: [NSManagedObject]){
+        
+        /// the array that keeps the instances of City
         var cityArray: [City] = []
-
+        
         for city in citiesManagedObject {
             guard let name = city.value(forKey: "name") as? String else {
                 self.modelResultUser?.saveFailed()
@@ -110,19 +123,20 @@ class CitiesCoreData: EntityProtocol {
         
     }
     
+    /**
+     empty the coreData when we have inconsistancies
+     */
     private func deleteData() {
         guard let appDelegate =
             UIApplication.shared.delegate as? AppDelegate else {
                 return
         }
         
-        // 1
         let managedContext =
             appDelegate.persistentContainer.viewContext
         let fetchRequest =
             NSFetchRequest<NSManagedObject>(entityName: "Cities")
         
-        //3
         do {
             let citiesManagedObject = try managedContext.fetch(fetchRequest)
             for city in citiesManagedObject {
@@ -134,12 +148,14 @@ class CitiesCoreData: EntityProtocol {
     }
 }
 
+/// the structure of the City model
 struct City {
     var name : String?
-    let pictureURlFresh = PicURLs.randomPicFresh
-    let pictureURLGray = PicURLs.randomPicUgly
+    var temp: Int?
 }
 
+
+// MARK: - Decodable models to use wirh decode function
 struct CitiesDic: Codable {
     var cities: [CityName]?
 }
