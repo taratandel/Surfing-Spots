@@ -21,10 +21,10 @@ protocol CityViewProtocol: class {
     func fetchFailed(title: String, message: String, actions: [UIAlertAction])
     func rearrangeCollectionView(indexToBedeleted: Int, indexToBeInserted: Int)
 }
-// MARK: - WireFrame Protocol
-protocol WireFrameProtocol {
-    static func creatTheView(_ viewRef: ViewController)
-}
+//// MARK: - WireFrame Protocol
+//protocol WireFrameProtocol {
+//    static func creatTheView(_ viewRef: ViewController)
+//}
 
 // MARK: - Presenter -> Entity
 protocol EntityProtocol {
