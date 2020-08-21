@@ -13,11 +13,11 @@ import UIKit
 
 class Presenter: PresenterProtocol {
     /// this is not weak because each presenter must have a client
-    private var client: GetDataProtocol?
+    var client: GetDataProtocol?
     /// this protocol is weak because if we don't have a view it's meaningless to have a presenter for it
     weak var view: CityViewProtocol?
     /// this is the coredata class
-    private var model: EntityProtocol?
+    var model: EntityProtocol?
     /// the local copy of the array of cities
     private var citiesDic: [City]?
     /// handler for temprature
@@ -39,8 +39,6 @@ class Presenter: PresenterProtocol {
      */
     init(view: CityViewProtocol) {
         self.view = view
-        self.model = CitiesCoreData(modelResultUser: self)
-        self.client = FetchRemoteData(requestProtocol: self)
     }
     /**
      This function will give to the collectionview the needed data
