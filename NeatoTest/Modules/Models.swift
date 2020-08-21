@@ -163,3 +163,10 @@ struct CitiesDic: Codable {
 struct CityName: Codable {
     var name: String?
 }
+
+struct RandomNO: Codable {
+    var text: String?
+    var number: Int?
+    var found: Bool?
+    var type: String?
+}
