@@ -35,6 +35,7 @@
 		57A0683C24EEA22F007CFC92 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A0683B24EEA22F007CFC92 /* Extension.swift */; };
 		57F5C58624EFE9140073CC5E /* TopLevelHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F5C58524EFE9140073CC5E /* TopLevelHelper.swift */; };
 		57F5C58824EFE9D50073CC5E /* MockClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F5C58724EFE9D50073CC5E /* MockClasses.swift */; };
+		57F5C58E24F00C4A0073CC5E /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F5C58D24F00C4A0073CC5E /* main.swift */; };
 		6CE7FDFF4507C9FA2FEE3C5F /* Pods_NeatoTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A859B972118D868CC072271D /* Pods_NeatoTest.framework */; };
 		94550D484DB885EE0B3440DA /* Pods_NeatoTest_NeatoTestUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4018BF635C8B22D8F0B617 /* Pods_NeatoTest_NeatoTestUITests.framework */; };
 /* End PBXBuildFile section */
@@ -92,6 +93,7 @@
 		57A0683B24EEA22F007CFC92 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		57F5C58524EFE9140073CC5E /* TopLevelHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopLevelHelper.swift; sourceTree = "<group>"; };
 		57F5C58724EFE9D50073CC5E /* MockClasses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockClasses.swift; sourceTree = "<group>"; };
+		57F5C58D24F00C4A0073CC5E /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		5E6C42194D1E42BB12D0DD1A /* Pods_NeatoTestTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NeatoTestTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A60A4205BA63D9D7D510130F /* Pods-NeatoTestTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeatoTestTests.debug.xcconfig"; path = "Target Support Files/Pods-NeatoTestTests/Pods-NeatoTestTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A859B972118D868CC072271D /* Pods_NeatoTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NeatoTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -178,6 +180,7 @@
 				57299A8924EBBC5500579783 /* LaunchScreen.storyboard */,
 				57299A8C24EBBC5500579783 /* Info.plist */,
 				57299A8424EBBC5100579783 /* NeatoTest.xcdatamodeld */,
+				57F5C58D24F00C4A0073CC5E /* main.swift */,
 			);
 			path = NeatoTest;
 			sourceTree = "<group>";
@@ -517,6 +520,7 @@
 			files = (
 				57299A8024EBBC5100579783 /* ViewController.swift in Sources */,
 				57299AC324EC797E00579783 /* BaseVC.swift in Sources */,
+				57F5C58E24F00C4A0073CC5E /* main.swift in Sources */,
 				57299A8624EBBC5100579783 /* NeatoTest.xcdatamodeld in Sources */,
 				57299AD224EC8A5000579783 /* protocols.swift in Sources */,
 				57299A7C24EBBC5100579783 /* AppDelegate.swift in Sources */,
