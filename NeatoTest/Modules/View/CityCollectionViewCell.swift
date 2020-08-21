@@ -15,6 +15,9 @@ class CityCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var cityName: UILabel!
     @IBOutlet weak var cityTemp: UILabel!
     
+    // MARK: - private variables
+    private var temp = 0
+    
     // MARK: - cell initialization
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,6 +30,7 @@ class CityCollectionViewCell: UICollectionViewCell {
      */
     func fillData (_ city: City, _ width: CGFloat) {
         let weatherString = city.temp ?? 0 > 30 ? "Sunny - ": "Cloudy - "
+        if city.temp != temp {
             // MARK: - background image
             self.cityImage.isHidden = city.temp ?? 0 < 30
             self.cityImage.image = UIImage(named: city.name ?? "PlaceHolder")
