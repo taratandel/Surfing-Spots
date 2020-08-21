@@ -18,7 +18,7 @@ class Presenter: PresenterProtocol {
     weak var view: CityViewProtocol?
     /// this is the coredata class
     private var model: EntityProtocol?
-    
+    /// the local copy of the array of cities
     private var citiesDic: [City]?
     /**
      initializes the presenter class for a given vc
@@ -57,6 +57,21 @@ class Presenter: PresenterProtocol {
     func mainViewDidLoad() {
         model?.retrieveFromeCoreData()
     }
+    /**
+     This function will check for any preexisting data on data base and make the proper request if needed
+     */
+    func requestTheCitiesIfNeeded() {
+        guard let citiesDic = model?.cities else {
+            client?.getTheListData(url: RequestType.cityList.path, method: .get, parameter: nil, header: nil)
+            return
+        }
+        if citiesDic.count > 0 {
+            self.citiesDic = citiesDic
+        } else {
+            client?.getTheListData(url: RequestType.cityList.path, method: .get, parameter: nil, header: nil)
+            return
+        }
+    }
 }
 /// The necessary functions for networking after the request is complete the presenter is responsible for data convertion and also for the connection between the entity
 extension Presenter: RequestServices {
@@ -65,13 +80,16 @@ extension Presenter: RequestServices {
      
      based on the result of parsing the failure or success will be concluded
      - Parameters:
-        - respnse: data type for parsing
+     - respnse: data type for parsing
      */
     func requestIsComplete(_ response: Data) {
         do {
             let parsedData = try JSONDecoder().decode(CitiesDic.self, from: response)
             if parsedData.cities?.count ?? 0 > 0 {
-                model?.saveToCoreData(array: parsedData)
+                for city in parsedData.cities!{
+                    model?.saveToCoreData(name: city.name ?? "a city")
+                }
+                model?.retrieveFromeCoreData()
             } else {
                 self.fetchFailed(error: RequestErrorType.serverError, message: "req failed")
             }
@@ -132,8 +150,9 @@ extension Presenter: ModelResultProtocol {
      if it was successfull then we assign the retrieved data to our class variable
      */
     func saveWasSuccessful() {
-        citiesDic = model?.cities
-        view?.reloadData()
+        self.requestTheCitiesIfNeeded()
+        tempHandler = TempretureHandler(presenter: self, timerInterval: 3)
+        requestForTemps()
     }
     /**
      This function is the implementation of the ModelResultProtocol which will inform the user of the result of the save action
@@ -142,6 +161,7 @@ extension Presenter: ModelResultProtocol {
      we don't use alert here because the user does not need to know about the underlying errors
      */
     func saveFailed() {
-        self.mainViewDidLoad()
+        self.requestTheCitiesIfNeeded()
+    }
     }
 }
