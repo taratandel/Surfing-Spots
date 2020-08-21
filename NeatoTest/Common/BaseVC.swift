@@ -13,8 +13,7 @@ class BaseViewController: UIViewController {
     // MARK: View settings
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.prefersLargeTitles = true
         // Do any additional setup after loading the view.
     }
     /**
@@ -50,5 +49,16 @@ class BaseViewController: UIViewController {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         actions.forEach{alertController.addAction($0)}
         self.present(alertController, animated: true, completion: completion)
+    }
+    
+    /**
+     This function will set the navigation bar title size , by default it is large
+     
+     - Parameters:
+        - isBig: set true if you want large navigation item bar title
+     */
+    func setNavigationBarTitleSizePreference(isBig: Bool) {
+        self.navigationController?.navigationBar.prefersLargeTitles = isBig
+
     }
 }
