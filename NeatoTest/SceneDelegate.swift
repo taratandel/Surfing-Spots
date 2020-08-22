@@ -24,8 +24,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let presenter = Presenter(view: vc)
         let client = FetchRemoteData(requestProtocol: presenter)
         let model = CitiesCoreData(modelResultUser: presenter)
+        let tempHandler = TempretureHandler(presenter: presenter, timerInterval: 3)
         presenter.client = client
         presenter.model = model
+        presenter.tempHandler = tempHandler
         vc.presenter = presenter
         let nav = UINavigationController()
         nav.viewControllers = [vc]

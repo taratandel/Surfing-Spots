@@ -21,7 +21,7 @@ class Presenter: PresenterProtocol {
     /// the local copy of the array of cities
     private var citiesDic: [City]?
     /// handler for temprature
-    private var tempHandler: PresenterTempratureProtocol?
+    var tempHandler: PresenterTempratureProtocol?
     
     /// avoid reloading the view each time a temp is loaded
     private var viewIsReloaded = false
@@ -162,7 +162,6 @@ extension Presenter: ModelResultProtocol {
      */
     func saveWasSuccessful() {
         self.requestTheCitiesIfNeeded()
-        tempHandler = TempretureHandler(presenter: self, timerInterval: 3)
         requestForTemps()
     }
     /**
