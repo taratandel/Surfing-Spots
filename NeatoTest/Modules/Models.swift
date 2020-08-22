@@ -146,6 +146,15 @@ class CitiesCoreData: EntityProtocol {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
+    
+    /**
+     this function will update our real model when data is stable
+     - Parameters:
+        - newModel: the stable data to be saved
+     */
+    func updateModel(newModel: [City]) {
+        self.cities = newModel
+    }
 }
 
 /// the structure of the City model

@@ -200,6 +200,7 @@ extension Presenter: TempHandlerProtocol {
             }else {
                 self.viewIsReloaded = true
                 self.citiesDic = cities.sorted(by: { $0.temp! > $1.temp! })
+                model?.updateModel(newModel: self.citiesDic!)
                 view?.reloadData()
                 tempHandler?.runTheTimer()
             }
@@ -239,6 +240,7 @@ extension Presenter: TempHandlerProtocol {
             if copyCity.count == citiesDic?.count ?? 0 {
                 citiesDic = copyCity
             }
+            model?.updateModel(newModel: citiesDic)
             if randomNO == indexToBeInserted {return}
             // rearrange the view afteer the update of the source
             view?.rearrangeCollectionView(indexToBedeleted: randomNO, indexToBeInserted: indexToBeInserted)

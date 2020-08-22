@@ -27,6 +27,7 @@ protocol EntityProtocol: class {
     var cities: [City]  {get set}
     func saveToCoreData(name: String)
     func retrieveFromeCoreData()
+    func updateModel(newModel: [City])
 }
 
 // MARK: - Entity -> Presenter
