@@ -78,9 +78,9 @@ class Presenter: PresenterProtocol {
         }
         if citiesDic.count > 0 {
             self.citiesDic = citiesDic
+            requestForTemps()
         } else {
             client?.getTheListData(url: RequestType.cityList.path, method: .get, parameter: nil, header: nil)
-            return
         }
     }
 }
