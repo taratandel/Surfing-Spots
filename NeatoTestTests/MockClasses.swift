@@ -91,6 +91,8 @@ class MockModel: EntityProtocol {
     var shouldFail = false
     var dataBennRetrieved = false
     var arrayTobeSaved: [String] = []
+    var shouldFillTemp: Bool = true
+    var presenter: ModelResultProtocol?
     
     func saveToCoreData(name: String) {
         arrayTobeSaved.append(name)
@@ -99,16 +101,40 @@ class MockModel: EntityProtocol {
     
     func retrieveFromeCoreData() {
         dataBennRetrieved = !shouldFail
+        presenter?.saveWasSuccessful()
     }
     
-    init (shouldFail: Bool) {
+    init (shouldFail: Bool, shouldFillTemp: Bool = true, presenter:  ModelResultProtocol? = nil) {
         self.shouldFail = shouldFail
+        self.shouldFillTemp = shouldFillTemp
+        self.presenter = presenter
     }
-    private func fillCitiesMock() {
+    func fillCitiesMock() {
         for name in arrayTobeSaved {
             var city = City()
             city.name = name
+            city.temp = shouldFillTemp ? Int(name):nil
             cities.append(city)
         }
     }
+}
+
+class MockTempHandler: PresenterTempratureProtocol {
+    var didRequestForTheNumer = false
+    var didrunTheTimer = false
+    var didTerminateTheTimer = false
+    
+    func requestForTheNumber() {
+        self.didRequestForTheNumer = true
+    }
+    
+    func runTheTimer() {
+        self.didrunTheTimer = true
+    }
+    
+    func terminateTheTimer() {
+        didTerminateTheTimer = true
+    }
+    
+    
 }

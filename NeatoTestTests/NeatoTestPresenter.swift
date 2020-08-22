@@ -47,19 +47,13 @@ class NeatoTestPresenter: XCTestCase {
     }
     
     func testGetNumberOfItemsInSection() {
-        var i = 0
-        var citiesDic: [City] = []
-        while i < 5 {
-            i += 1
-            var city = City()
-            city.name = "name" + "\(i)"
-            city.temp = i
-            citiesDic.append(city)
+        for name in 0..<10 {
+            model.saveToCoreData(name: "\(name)")
         }
-        let model = MockModel(shouldFail: false)
-        model.cities = citiesDic
-        
-        XCTAssertNotNil(presenter.getTheNumberOfItemsInSection(section: 0)==5 )
+        model.fillCitiesMock()
+        presenter.model = model
+        presenter.requestTheCitiesIfNeeded()
+        XCTAssertTrue(presenter.getTheNumberOfItemsInSection(section: 0) == 10 )
     }
     
     func testRequestIsCompleteWithEmptyData() {
@@ -76,7 +70,7 @@ class NeatoTestPresenter: XCTestCase {
     func testFetchFaildWithMessageAndErrorTypeBadRequest() {
         presenter.fetchFailed(error: RequestErrorType.badRequest, message: "this is badRequest")
         XCTAssertTrue(vc.errorMessage == "this is badRequest")
-
+        
     }
     
     func testFetchFaildWithMessageAndErrorTypeNoInternet() {
@@ -100,7 +94,7 @@ class NeatoTestPresenter: XCTestCase {
     func testRequestTheCitiesIfNeededModelDicIsEmpty() {
         model.dataBennRetrieved = false
         model.dataBeenSaved = false
-
+        
         client.shouldRequest(for: "City", with: "json")
         client.requestProtocol = presenter
         
@@ -112,28 +106,47 @@ class NeatoTestPresenter: XCTestCase {
         
     }
     
-    func testRequestTheCitiesIfNeededModelDicIsNotEmpty() {
-        model.dataBennRetrieved = false
-        model.dataBeenSaved = false
+    func testRequestForTemps() {
+        let mockTempHandler = MockTempHandler()
+        mockTempHandler.didRequestForTheNumer = false
+        presenter.tempHandler = mockTempHandler
+        presenter.requestForTemps()
+        XCTAssertTrue(mockTempHandler.didRequestForTheNumer)
+    }
+    
+    /// when the citiesDic is empty
+    func testTempChanged_ViewIsNotReloaded_empty() {
+        let mockTempHandler = MockTempHandler()
+        mockTempHandler.didRequestForTheNumer = false
+        presenter.tempHandler = mockTempHandler
+        let model = MockModel(shouldFail: false, shouldFillTemp: false, presenter: presenter)
+        
+        for name in 0..<10 {
+            model.saveToCoreData(name: "\(name)")
+        }
+        model.fillCitiesMock()
+        
+        presenter.model = model
+        
+        presenter.tempChanged(temp: 9)
+        
+        XCTAssertTrue( mockTempHandler.didRequestForTheNumer == true)
+    }
+    /// when the citiesDic is full and there are cities in the dictionary for which we don't have the temp
+    func testTempChanged_ViewIsNotReloaded_full(<#parameters#>) -> <#return type#> {
+        <#function body#>
     }
     
     func testGetCityWithfullDic () {
-        var i = 0
-        var citiesDic: [City] = []
-        while i < 5 {
-            i += 1
-            var city = City()
-            city.name = "name" + "\(i)"
-            city.temp = i
-            citiesDic.append(city)
+        for name in 0..<10 {
+            model.saveToCoreData(name: "\(name)")
         }
-        let model = MockModel(shouldFail: false)
-        model.cities = citiesDic
+        model.fillCitiesMock()
         
         presenter.model = model
         presenter.requestTheCitiesIfNeeded()
         
-        XCTAssertTrue(presenter.getCity(at: IndexPath(row: 4, section: 0)).temp == 5 )
+        XCTAssertTrue(presenter.getCity(at: IndexPath(row: 4, section: 0)).temp == 4 )
     }
     
     func setUpView(with shouldBeEmpty: Bool) {
