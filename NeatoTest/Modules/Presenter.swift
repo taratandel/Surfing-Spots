@@ -76,7 +76,7 @@ class Presenter: PresenterProtocol {
             client?.getTheListData(url: RequestType.cityList.path, method: .get, parameter: nil, header: nil)
             return
         }
-        if citiesDic.count > 0 {
+        if citiesDic.count > 0 && self.citiesDic?.count != citiesDic.count{
             self.citiesDic = citiesDic
             requestForTemps()
         } else {
@@ -162,7 +162,6 @@ extension Presenter: ModelResultProtocol {
      */
     func saveWasSuccessful() {
         self.requestTheCitiesIfNeeded()
-        requestForTemps()
     }
     /**
      This function is the implementation of the ModelResultProtocol which will inform the user of the result of the save action
@@ -203,6 +202,7 @@ extension Presenter: TempHandlerProtocol {
                 model?.updateModel(newModel: self.citiesDic!)
                 view?.reloadData()
                 tempHandler?.runTheTimer()
+                return
             }
             
         } else {
@@ -240,7 +240,7 @@ extension Presenter: TempHandlerProtocol {
             if copyCity.count == citiesDic?.count ?? 0 {
                 citiesDic = copyCity
             }
-            model?.updateModel(newModel: citiesDic)
+            model?.updateModel(newModel: citiesDic ?? [City()])
             if randomNO == indexToBeInserted {return}
             // rearrange the view afteer the update of the source
             view?.rearrangeCollectionView(indexToBedeleted: randomNO, indexToBeInserted: indexToBeInserted)
