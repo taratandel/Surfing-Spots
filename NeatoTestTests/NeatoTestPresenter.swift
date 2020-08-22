@@ -133,8 +133,44 @@ class NeatoTestPresenter: XCTestCase {
         XCTAssertTrue( mockTempHandler.didRequestForTheNumer == true)
     }
     /// when the citiesDic is full and there are cities in the dictionary for which we don't have the temp
-    func testTempChanged_ViewIsNotReloaded_full(<#parameters#>) -> <#return type#> {
-        <#function body#>
+    func testTempChanged_ViewIsNotReloaded_full() {
+        let mockTempHandler = MockTempHandler(presenter: presenter)
+        mockTempHandler.didRequestForTheNumer = false
+        presenter.tempHandler = mockTempHandler
+        let model = MockModel(shouldFail: false, shouldFillTemp: false, presenter: presenter)
+        
+        for name in 0..<10 {
+            model.saveToCoreData(name: "\(name)")
+        }
+        model.fillCitiesMock()
+        
+        presenter.model = model
+        presenter.mainViewDidLoad()
+        
+        XCTAssertEqual(presenter.getCity(at: IndexPath(row: 0, section: 0)).temp, 30)
+    }
+    
+    /// when the citiesDic is full and there are NO cities in the dictionary for which we don't have the temp
+    func testTempChanged_ViewIsNotReloaded_full2() {
+        let mockTempHandler = MockTempHandler(presenter: presenter)
+        mockTempHandler.didRequestForTheNumer = false
+        presenter.tempHandler = mockTempHandler
+        let model = MockModel(shouldFail: false, shouldFillTemp: false, presenter: presenter)
+        
+        for name in 0..<10 {
+            model.saveToCoreData(name: "\(name)")
+        }
+        model.fillCitiesMock()
+        
+        presenter.model = model
+        
+        presenter.model = model
+        presenter.mainViewDidLoad()
+        
+        XCTAssertEqual(mockTempHandler.didRequestForTheNumer, true)
+        XCTAssertEqual(vc.dataReloaded, true)
+        XCTAssertEqual(mockTempHandler.didrunTheTimer, true)
+
     }
     
     func testGetCityWithfullDic () {
