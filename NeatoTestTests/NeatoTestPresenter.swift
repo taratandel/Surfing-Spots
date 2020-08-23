@@ -173,6 +173,11 @@ class NeatoTestPresenter: XCTestCase {
 
     }
     
+    func testTempChanged_runTheTimer() {
+        
+    }
+    
+    
     func testGetCityWithfullDic () {
         for name in 0..<10 {
             model.saveToCoreData(name: "\(name)")

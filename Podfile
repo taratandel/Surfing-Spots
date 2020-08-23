@@ -7,7 +7,7 @@ target 'NeatoTest' do
 
   # Pods for NeatoTest
 pod 'Alamofire', '~> 5.2'
-pod 'SDWebImage', '~> 5.8'
+
 
   target 'NeatoTestTests' do
     inherit! :search_paths
