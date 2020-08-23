@@ -26,7 +26,7 @@ If your are using a mac:
 ## Running the tests 
 You can run the test by simply going to `Test Navigator` at *navigation pane* (usually at the left side of the xcode) and run all the tests and see the results. 
 
-<img width="600" src="./ReadME/testing.png">
+<img width="200" src="./ReadME/testing.png">
 
 ## Acknowledgments 
 * This app written using ***MVP*** pattern (with seprated networking channel which is connected to presenter) 
