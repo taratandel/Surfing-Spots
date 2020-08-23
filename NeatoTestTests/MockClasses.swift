@@ -141,6 +141,7 @@ class MockTempHandler: PresenterTempratureProtocol {
     
     func runTheTimer() {
         self.didrunTheTimer = true
+        presenter?.tempChanged(temp: 30)
     }
     
     func terminateTheTimer() {

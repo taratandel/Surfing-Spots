@@ -186,16 +186,14 @@ extension Presenter: TempHandlerProtocol {
             return
         }
         if !viewIsReloaded {
-            if lastUpdatedIndex < cities.count {
-                let city = cities[lastUpdatedIndex]
-                if city.temp == nil {
-                    var newCity = city
+            if lastUpdatedIndex < cities.count, cities[lastUpdatedIndex].temp == nil {
+                    var newCity = cities[lastUpdatedIndex]
                     newCity.temp = temp
                     citiesDic?.remove(at: lastUpdatedIndex)
                     citiesDic?.insert(newCity, at: lastUpdatedIndex)
                     lastUpdatedIndex += 1
                     tempHandler?.requestForTheNumber()
-                }
+                
             }else {
                 self.viewIsReloaded = true
                 self.citiesDic = cities.sorted(by: { $0.temp! > $1.temp! })

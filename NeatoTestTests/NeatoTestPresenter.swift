@@ -170,10 +170,25 @@ class NeatoTestPresenter: XCTestCase {
         XCTAssertEqual(mockTempHandler.didRequestForTheNumer, true)
         XCTAssertEqual(vc.dataReloaded, true)
         XCTAssertEqual(mockTempHandler.didrunTheTimer, true)
-
+        
     }
     
     func testTempChanged_runTheTimer() {
+        let mockTempHandler = MockTempHandler(presenter: presenter)
+        mockTempHandler.didRequestForTheNumer = false
+        presenter.tempHandler = mockTempHandler
+        let model = MockModel(shouldFail: false, shouldFillTemp: true, presenter: presenter)
+        
+        for name in 0..<10 {
+            model.saveToCoreData(name: "\(name)")
+        }
+        model.fillCitiesMock()
+        
+        presenter.model = model
+        
+        presenter.model = model
+        presenter.mainViewDidLoad()
+        XCTAssertNotNil(model.cities.filter({$0.temp! == 30}))
         
     }
     
